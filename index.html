@@ -1,147 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>BlogSphere - Home</title>
 
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-<body>
+  <body>
     <header>
-        <nav class="navbar">
+      <nav class="navbar">
+        <div class="logo">BlogSphere</div>
 
-            <div class="logo">
-                BlogSphere
-            </div>
+        <button class="menu-toggle" id="menuToggle">☰</button>
 
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="blogs.html">Blogs</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="register.html">Register</a></li>
-            </ul>
-
-        </nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="blogs.html">Blogs</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+        </ul>
+      </nav>
     </header>
 
     <main>
+      <section class="hero">
+        <div class="hero-content">
+          <h1>Share Your Story With The World</h1>
 
-        <section class="hero">
+          <p>
+            Write, discover, and share amazing stories with our growing
+            community of bloggers.
+          </p>
 
-            <div class="hero-content">
+          <a href="#" class="btn"> Explore Blogs </a>
+        </div>
+      </section>
 
-                <h1>Share Your Story With The World</h1>
+      <section class="blogs-section">
+        <h2>Featured Blogs</h2>
 
-                <p>
-                    Write, discover, and share amazing stories with
-                    our growing community of bloggers.
-                </p>
+        <div class="blog-container">
+          <article class="blog-card">
+            <div class="blog-content">
+              <span class="category"> Technology </span>
 
-                <a href="#" class="btn">
-                    Explore Blogs
-                </a>
+              <h3>The Future of Artificial Intelligence</h3>
 
+              <p>
+                Discover how artificial intelligence is changing the way we live
+                and work.
+              </p>
+
+              <a href="#" class="read-more"> Read More → </a>
             </div>
+          </article>
 
-        </section>
+          <article class="blog-card">
+            <div class="blog-content">
+              <span class="category"> Programming </span>
 
-        <section class="blogs-section">
+              <h3>Why Every Student Should Learn Coding</h3>
 
-            <h2>Featured Blogs</h2>
+              <p>
+                Learn how programming can improve problem-solving and career
+                opportunities.
+              </p>
 
-            <div class="blog-container">
-                <article class="blog-card">
-
-                    <div class="blog-content">
-
-                        <span class="category">
-                            Technology
-                        </span>
-
-                        <h3>
-                            The Future of Artificial Intelligence
-                        </h3>
-
-                        <p>
-                            Discover how artificial intelligence
-                            is changing the way we live and work.
-                        </p>
-
-                        <a href="#" class="read-more">
-                            Read More →
-                        </a>
-
-                    </div>
-
-                </article>
-
-                <article class="blog-card">
-
-                    <div class="blog-content">
-
-                        <span class="category">
-                            Programming
-                        </span>
-
-                        <h3>
-                            Why Every Student Should Learn Coding
-                        </h3>
-
-                        <p>
-                            Learn how programming can improve
-                            problem-solving and career opportunities.
-                        </p>
-
-                        <a href="#" class="read-more">
-                            Read More →
-                        </a>
-
-                    </div>
-
-                </article>
-                <article class="blog-card">
-
-                    <div class="blog-content">
-
-                        <span class="category">
-                            Education
-                        </span>
-
-                        <h3>
-                            Building Better Learning Habits
-                        </h3>
-
-                        <p>
-                            Simple strategies to make your
-                            learning journey more productive.
-                        </p>
-
-                        <a href="#" class="read-more">
-                            Read More →
-                        </a>
-
-                    </div>
-
-                </article>
-
+              <a href="#" class="read-more"> Read More → </a>
             </div>
+          </article>
+          <article class="blog-card">
+            <div class="blog-content">
+              <span class="category"> Education </span>
 
-        </section>
+              <h3>Building Better Learning Habits</h3>
 
+              <p>
+                Simple strategies to make your learning journey more productive.
+              </p>
+
+              <a href="#" class="read-more"> Read More → </a>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
     <footer>
-
-        <p>
-            © 2026 BlogSphere. All Rights Reserved.
-        </p>
-
+      <p>© 2026 BlogSphere. All Rights Reserved.</p>
     </footer>
 
-
     <script src="js/script.js"></script>
-
-</body>
+  </body>
 </html>
