@@ -118,15 +118,45 @@
                         </label>
 
                         <textarea
-                            id="blog-content"
-                            rows="12"
-                            placeholder="Write your blog here..."
-                            required
-                        ></textarea>
+    id="blog-content"
+    rows="12"
+    maxlength="2000"
+    placeholder="Write your blog here..."
+    required
+></textarea>
+
+<div class="character-counter">
+    <span id="characterCount">0</span>/2000 characters
+</div>
 
                     </div>
 
+<!-- Blog Preview -->
 
+<div class="blog-preview">
+
+    <h3>Live Preview</h3>
+
+    <div class="preview-card">
+
+        <span
+            class="category"
+            id="previewCategory"
+        >
+            Category
+        </span>
+
+        <h2 id="previewTitle">
+            Your Blog Title
+        </h2>
+
+        <p id="previewContent">
+            Your blog content will appear here...
+        </p>
+
+    </div>
+
+</div>
                     <!-- Buttons -->
                     <div class="blog-form-actions">
 
