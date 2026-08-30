@@ -1,111 +1,312 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>BlogSphere - Blog Details</title>
+```
+<title>BlogSphere - Blog Details</title>
 
-    <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css">
+```
+
 </head>
 
 <body>
 
-    <!-- Navigation Bar -->
-    <header>
-        <nav class="navbar">
+```
+<!-- Navigation Bar -->
+<header>
+    <nav class="navbar">
 
-            <div class="logo">
-                BlogSphere
-            </div>
+        <div class="logo">
+            BlogSphere
+        </div>
 
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="blogs.html">Blogs</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="register.html">Register</a></li>
-            </ul>
+        <ul class="nav-links">
 
-        </nav>
-    </header>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="blogs.html">Blogs</a>
+            </li>
+
+            <li>
+                <a href="login.html">Login</a>
+            </li>
+
+            <li>
+                <a href="register.html">Register</a>
+            </li>
+
+        </ul>
+
+    </nav>
+</header>
 
 
-    <!-- Blog Details -->
-    <main>
+<!-- Blog Details -->
 
-        <article class="blog-details">
+<main>
 
-            <span class="category">
-                Technology
+    <article class="blog-details">
+
+        <span class="category" id="blogCategory">
+            Loading...
+        </span>
+
+        <h1 id="blogTitle">
+            Loading blog...
+        </h1>
+
+        <div class="blog-meta">
+
+            <span>
+                By <span id="blogAuthor">Loading...</span>
             </span>
 
-            <h1>
-                The Future of Artificial Intelligence
-            </h1>
+            <span>•</span>
 
-            <div class="blog-meta">
-                <span>By BlogSphere</span>
-                <span>•</span>
-                <span>August 24, 2026</span>
-            </div>
+            <span id="blogDate">
+                Loading...
+            </span>
 
-            <div class="blog-content">
+        </div>
 
+
+        <div class="blog-content" id="blogContent">
+
+            <p>
+                Loading blog content...
+            </p>
+
+        </div>
+
+
+        <a href="blogs.html" class="back-btn">
+            ← Back to Blogs
+        </a>
+
+    </article>
+
+</main>
+
+
+<!-- Footer -->
+
+<footer>
+
+    <p>
+        © 2026 BlogSphere. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<script>
+
+    // =========================
+    // Get Blog ID From URL
+    // =========================
+
+    const urlParams =
+        new URLSearchParams(window.location.search);
+
+    const blogId =
+        urlParams.get("id");
+
+
+    // =========================
+    // HTML Elements
+    // =========================
+
+    const blogTitle =
+        document.getElementById("blogTitle");
+
+    const blogCategory =
+        document.getElementById("blogCategory");
+
+    const blogAuthor =
+        document.getElementById("blogAuthor");
+
+    const blogDate =
+        document.getElementById("blogDate");
+
+    const blogContent =
+        document.getElementById("blogContent");
+
+
+    // =========================
+    // Check Blog ID
+    // =========================
+
+    if (!blogId) {
+
+        blogTitle.textContent =
+            "Blog Not Found";
+
+        blogCategory.textContent =
+            "Error";
+
+        blogAuthor.textContent =
+            "-";
+
+        blogDate.textContent =
+            "-";
+
+        blogContent.innerHTML = `
+            <p>
+                No blog ID was provided.
+            </p>
+        `;
+
+    } else {
+
+        loadBlog(blogId);
+
+    }
+
+
+    // =========================
+    // Load Blog
+    // =========================
+
+    async function loadBlog(id) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `http://localhost:5000/api/blogs/${id}`
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok || !data.success) {
+
+                throw new Error(
+                    data.message || "Blog not found"
+                );
+
+            }
+
+
+            const blog =
+                data.blog;
+
+
+            // Blog title
+
+            blogTitle.textContent =
+                blog.title;
+
+
+            // Category
+
+            blogCategory.textContent =
+                blog.category;
+
+
+            // Author
+
+            blogAuthor.textContent =
+                blog.author;
+
+
+            // Date
+
+            const date =
+                new Date(blog.createdAt);
+
+
+            blogDate.textContent =
+                date.toLocaleDateString(
+                    "en-IN",
+                    {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                    }
+                );
+
+
+            // Content
+
+            blogContent.innerHTML = "";
+
+
+            const paragraphs =
+                blog.content.split("\n");
+
+
+            paragraphs.forEach(function (paragraph) {
+
+                if (paragraph.trim() !== "") {
+
+                    const p =
+                        document.createElement("p");
+
+                    p.textContent =
+                        paragraph.trim();
+
+                    blogContent.appendChild(p);
+
+                }
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "Error loading blog:",
+                error
+            );
+
+
+            blogTitle.textContent =
+                "Unable to Load Blog";
+
+
+            blogCategory.textContent =
+                "Error";
+
+
+            blogAuthor.textContent =
+                "-";
+
+
+            blogDate.textContent =
+                "-";
+
+
+            blogContent.innerHTML = `
                 <p>
-                    Artificial intelligence is rapidly changing
-                    the way people interact with technology.
-                    From intelligent assistants to advanced
-                    data analysis, AI is becoming an important
-                    part of modern life.
+                    ${error.message}
                 </p>
 
                 <p>
-                    Businesses are using AI to automate repetitive
-                    tasks, improve decision-making, and create
-                    better experiences for their customers.
+                    Please make sure the backend
+                    server is running.
                 </p>
+            `;
 
-                <h2>
-                    The Future of AI
-                </h2>
+        }
 
-                <p>
-                    As artificial intelligence continues to evolve,
-                    developers will play an important role in
-                    creating responsible and useful AI-powered
-                    applications.
-                </p>
+    }
 
-                <p>
-                    Learning programming, data structures,
-                    machine learning, and web development can
-                    help students prepare for the opportunities
-                    created by this technology.
-                </p>
-
-            </div>
-
-            <a href="blogs.html" class="back-btn">
-                ← Back to Blogs
-            </a>
-
-        </article>
-
-    </main>
+</script>
 
 
-    <!-- Footer -->
-    <footer>
-
-        <p>
-            © 2026 BlogSphere. All Rights Reserved.
-        </p>
-
-    </footer>
-
-
-    <script src="js/script.js"></script>
+<script src="js/script.js"></script>
+```
 
 </body>
 
