@@ -4,139 +4,232 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================
-    // Login Form
-    // =========================
+// Login Form
+// =========================
 
-    const loginForm =
-        document.getElementById("loginForm");
+const loginForm =
+    document.getElementById("loginForm");
 
-    if (loginForm) {
+if (loginForm) {
 
-        loginForm.addEventListener("submit", function (event) {
+    loginForm.addEventListener("submit", async function (event) {
 
-            event.preventDefault();
-
-            const email =
-                document.getElementById("login-email").value.trim();
-
-            const password =
-                document.getElementById("login-password").value;
+        event.preventDefault();
 
 
-            if (email === "" || password === "") {
+        const email =
+            document.getElementById("login-email").value.trim();
 
-                alert("Please fill in all fields.");
-
-                return;
-            }
-
-
-            const emailPattern =
-                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const password =
+            document.getElementById("login-password").value;
 
 
-            if (!emailPattern.test(email)) {
+        // Check empty fields
 
-                alert("Please enter a valid email address.");
+        if (email === "" || password === "") {
 
-                return;
-            }
+            alert("Please fill in all fields.");
 
-
-            if (password.length < 6) {
-
-                alert(
-                    "Password must contain at least 6 characters."
-                );
-
-                return;
-            }
+            return;
+        }
 
 
-            alert("Login form submitted successfully!");
+        // Email validation
 
-        });
+        const emailPattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    }
+        if (!emailPattern.test(email)) {
 
+            alert("Please enter a valid email address.");
 
-    // =========================
-    // Register Form
-    // =========================
-
-    const registerForm =
-        document.getElementById("registerForm");
-
-    if (registerForm) {
-
-        registerForm.addEventListener("submit", function (event) {
-
-            event.preventDefault();
+            return;
+        }
 
 
-            const name =
-                document.getElementById("name").value.trim();
+        // Send login data to backend
 
-            const email =
-                document.getElementById("register-email").value.trim();
+        try {
 
-            const password =
-                document.getElementById("register-password").value;
+            const response = await fetch(
+                "http://localhost:5000/api/auth/login",
+                {
+                    method: "POST",
 
-            const confirmPassword =
-                document.getElementById("confirm-password").value;
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
 
-
-            if (
-                name === "" ||
-                email === "" ||
-                password === "" ||
-                confirmPassword === ""
-            ) {
-
-                alert("Please fill in all fields.");
-
-                return;
-            }
-
-
-            const emailPattern =
-                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-            if (!emailPattern.test(email)) {
-
-                alert("Please enter a valid email address.");
-
-                return;
-            }
-
-
-            if (password.length < 6) {
-
-                alert(
-                    "Password must contain at least 6 characters."
-                );
-
-                return;
-            }
-
-
-            if (password !== confirmPassword) {
-
-                alert("Passwords do not match.");
-
-                return;
-            }
-
-
-            alert(
-                "Registration form submitted successfully!"
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                }
             );
 
-        });
 
-    }
+            const data = await response.json();
+
+
+            if (data.success) {
+
+                alert(data.message);
+
+                console.log(
+                    "Logged in user:",
+                    data.user
+                );
+
+            } else {
+
+                alert(data.message);
+
+            }
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Unable to connect to the server. Please make sure the backend is running."
+            );
+
+        }
+
+    });
+
+}
+
+    
+    // =========================
+// Register Form
+// =========================
+
+const registerForm =
+    document.getElementById("registerForm");
+
+if (registerForm) {
+
+    registerForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        const email =
+            document.getElementById("register-email").value.trim();
+
+        const password =
+            document.getElementById("register-password").value;
+
+        const confirmPassword =
+            document.getElementById("confirm-password").value;
+
+
+        // Check empty fields
+
+        if (
+            name === "" ||
+            email === "" ||
+            password === "" ||
+            confirmPassword === ""
+        ) {
+
+            alert("Please fill in all fields.");
+
+            return;
+        }
+
+
+        // Email validation
+
+        const emailPattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+
+            alert("Please enter a valid email address.");
+
+            return;
+        }
+
+
+        // Password validation
+
+        if (password.length < 6) {
+
+            alert(
+                "Password must contain at least 6 characters."
+            );
+
+            return;
+        }
+
+
+        // Confirm password
+
+        if (password !== confirmPassword) {
+
+            alert("Passwords do not match.");
+
+            return;
+        }
+
+
+        // Send data to backend
+
+        try {
+
+            const response = await fetch(
+                "http://localhost:5000/api/auth/register",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        password: password
+                    })
+                }
+            );
+
+
+            const data = await response.json();
+
+
+            if (data.success) {
+
+                alert(data.message);
+
+                registerForm.reset();
+
+            } else {
+
+                alert(data.message);
+
+            }
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Unable to connect to the server. Please make sure the backend is running."
+            );
+
+        }
+
+    });
+
+}
 
 
     // =========================
