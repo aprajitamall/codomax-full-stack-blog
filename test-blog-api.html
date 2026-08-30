@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BlogSphere Blog API Test</title>
+</head>
+
+<body>
+
+    <h1>BlogSphere Blog API Test</h1>
+
+    <button id="createBlogBtn">
+        Create Test Blog
+    </button>
+
+    <button id="getBlogsBtn">
+        Get All Blogs
+    </button>
+
+    <pre id="result"></pre>
+
+
+    <script>
+
+        const result =
+            document.getElementById("result");
+
+
+        // =========================
+        // Create Blog
+        // =========================
+
+        document
+            .getElementById("createBlogBtn")
+            .addEventListener("click", async function () {
+
+                try {
+
+                    const response = await fetch(
+                        "http://localhost:5000/api/blogs",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                title:
+                                    "Introduction to Web Development",
+
+                                category:
+                                    "Programming",
+
+                                content:
+                                    "Web development is an important skill for modern developers.",
+
+                                author:
+                                    "Aprajita Mall"
+
+                            })
+
+                        }
+                    );
+
+
+                    const data =
+                        await response.json();
+
+
+                    result.textContent =
+                        JSON.stringify(
+                            data,
+                            null,
+                            4
+                        );
+
+
+                } catch (error) {
+
+                    result.textContent =
+                        "Error: " + error.message;
+
+                }
+
+            });
+
+
+        // =========================
+        // Get All Blogs
+        // =========================
+
+        document
+            .getElementById("getBlogsBtn")
+            .addEventListener("click", async function () {
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "http://localhost:5000/api/blogs"
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    result.textContent =
+                        JSON.stringify(
+                            data,
+                            null,
+                            4
+                        );
+
+
+                } catch (error) {
+
+                    result.textContent =
+                        "Error: " + error.message;
+
+                }
+
+            });
+
+    </script>
+
+</body>
+
+</html>

@@ -230,69 +230,100 @@ if (registerForm) {
     });
 
 }
+// =========================
+// Create Blog Form
+// =========================
+
+const createBlogForm =
+    document.getElementById("createBlogForm");
+
+if (createBlogForm) {
+
+    createBlogForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
 
 
-    // =========================
-    // Create Blog Form
-    // =========================
+        const title =
+            document.getElementById("blog-title").value.trim();
 
-    const createBlogForm =
-        document.getElementById("createBlogForm");
+        const category =
+            document.getElementById("blog-category").value;
 
-    if (createBlogForm) {
-
-        createBlogForm.addEventListener("submit", function (event) {
-
-            event.preventDefault();
+        const content =
+            document.getElementById("blog-content").value.trim();
 
 
-            const title =
-                document.getElementById("blog-title").value.trim();
+        // Check fields
 
-            const category =
-                document.getElementById("blog-category").value;
+        if (
+            title === "" ||
+            category === "" ||
+            content === ""
+        ) {
 
-            const content =
-                document.getElementById("blog-content").value.trim();
+            alert("Please complete all blog fields.");
+
+            return;
+        }
 
 
-            if (
-                title === "" ||
-                category === "" ||
-                content === ""
-            ) {
+        try {
 
-                alert("Please complete all blog fields.");
+            const response = await fetch(
+                "http://localhost:5000/api/blogs",
+                {
+                    method: "POST",
 
-                return;
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        title: title,
+
+                        category: category,
+
+                        content: content,
+
+                        author: "Aprajita Mall"
+
+                    })
+                }
+            );
+
+
+            const data =
+                await response.json();
+
+
+            if (data.success) {
+
+                alert(data.message);
+
+                createBlogForm.reset();
+
+            } else {
+
+                alert(data.message);
+
             }
 
 
-            if (title.length < 5) {
+        } catch (error) {
 
-                alert(
-                    "Blog title must contain at least 5 characters."
-                );
+            console.error(error);
 
-                return;
-            }
+            alert(
+                "Unable to connect to the server. Please make sure the backend is running."
+            );
 
+        }
 
-            if (content.length < 20) {
+    });
 
-                alert(
-                    "Blog content must contain at least 20 characters."
-                );
-
-                return;
-            }
-
-
-            alert("Blog submitted successfully!");
-
-        });
-
-    }
+}
 
 
     // =========================
