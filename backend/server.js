@@ -1,3 +1,6 @@
+require("dotenv").config();
+const connectDB = require("./config/db");
+
 const authRoutes = require("./routes/authRoutes");
 const blogRoutes =
     require("./routes/blogRoutes");
@@ -5,6 +8,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
+connectDB();
 
 const PORT = 5000;
 
