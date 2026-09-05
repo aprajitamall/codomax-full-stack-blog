@@ -1,76 +1,51 @@
 const express = require("express");
+const Blog = require("../models/Blog");
 
 const router = express.Router();
 
-
-// Temporary blog storage
-
-const blogs = [];
-
+// ==============================
 // Create Blog
-router.post("/", (req, res) => {
+// ==============================
 
-    const {
-        title,
-        category,
-        content,
-        author
-    } = req.body;
+router.post("/", async (req, res) => {
+    try {
+        const {
+            title,
+            category,
+            content,
+            author
+        } = req.body;
 
+        // Validate fields
+        if (!title || !category || !content || !author) {
+            return res.status(400).json({
+                success: false,
+                message: "Title, category, content and author are required."
+            });
+        }
 
-    // Validate fields
-
-    if (
-        !title ||
-        !category ||
-        !content ||
-        !author
-    ) {
-
-        return res.status(400).json({
-
-            success: false,
-
-            message:
-                "Title, category, content and author are required."
-
+        // Create blog in MongoDB
+        const newBlog = await Blog.create({
+            title,
+            category,
+            content,
+            author
         });
 
+        res.status(201).json({
+            success: true,
+            message: "Blog created successfully.",
+            blog: newBlog
+        });
+
+    } catch (error) {
+        console.error("Create blog error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Server error while creating blog."
+        });
     }
-
-
-    // Create blog
-
-    const newBlog = {
-
-        id: blogs.length + 1,
-
-        title,
-
-        category,
-
-        content,
-
-        author,
-
-        createdAt: new Date().toISOString()
-
-    };
-
-
-    blogs.push(newBlog);
-
-
-    res.status(201).json({
-
-        success: true,
-
-        message: "Blog created successfully.",
-
-        blog: newBlog
-
-    });
-
 });
 
 
@@ -78,18 +53,24 @@ router.post("/", (req, res) => {
 // Get All Blogs
 // ==============================
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
+    try {
+        const blogs = await Blog.find().sort({ createdAt: -1 });
 
-    res.status(200).json({
+        res.status(200).json({
+            success: true,
+            count: blogs.length,
+            blogs
+        });
 
-        success: true,
+    } catch (error) {
+        console.error("Get blogs error:", error);
 
-        count: blogs.length,
-
-        blogs
-
-    });
-
+        res.status(500).json({
+            success: false,
+            message: "Server error while fetching blogs."
+        });
+    }
 });
 
 
@@ -97,39 +78,30 @@ router.get("/", (req, res) => {
 // Get Single Blog
 // ==============================
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
+    try {
+        const blog = await Blog.findById(req.params.id);
 
-    const blogId =
-        parseInt(req.params.id);
+        if (!blog) {
+            return res.status(404).json({
+                success: false,
+                message: "Blog not found."
+            });
+        }
 
-
-    const blog =
-        blogs.find(
-            blog => blog.id === blogId
-        );
-
-
-    if (!blog) {
-
-        return res.status(404).json({
-
-            success: false,
-
-            message: "Blog not found."
-
+        res.status(200).json({
+            success: true,
+            blog
         });
 
+    } catch (error) {
+        console.error("Get single blog error:", error);
+
+        res.status(400).json({
+            success: false,
+            message: "Invalid blog ID."
+        });
     }
-
-
-    res.status(200).json({
-
-        success: true,
-
-        blog
-
-    });
-
 });
 
 

@@ -601,7 +601,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     </p>
 
                     <a
-                        href="blog-details.html?id=${blog.id}"
+                        href="blog-details.html?id=${blog._id}"
                         class="read-more"
                     >
                         Read More →
