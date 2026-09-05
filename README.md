@@ -96,3 +96,13 @@ blog-application/
 │
 └── js/
     └── script.js
+    ## Module 3 – Database Integration
+
+### Day 12 – Final Testing
+
+- Tested MongoDB blog storage and retrieval.
+- Tested individual blog details using MongoDB ObjectId.
+- Tested invalid blog ID handling.
+- Verified blogs persist after backend restart.
+- Verified MongoDB collections for users and blogs.
+- Completed Module 3 database integration.
