@@ -47,15 +47,34 @@ router.post("/", async (req, res) => {
         });
     }
 });
-
-
 // ==============================
 // Get All Blogs
+// Search & Category Filtering
 // ==============================
 
 router.get("/", async (req, res) => {
     try {
-        const blogs = await Blog.find().sort({ createdAt: -1 });
+        const { search, category } = req.query;
+
+        let filter = {};
+
+        // Search by title or content
+        if (search) {
+            filter.$or = [
+                { title: { $regex: search, $options: "i" } },
+                { content: { $regex: search, $options: "i" } }
+            ];
+        }
+
+        // Filter by category
+        if (category) {
+            filter.category = {
+                $regex: `^${category}$`,
+                $options: "i"
+            };
+        }
+
+        const blogs = await Blog.find(filter).sort({ createdAt: -1 });
 
         res.status(200).json({
             success: true,
@@ -72,6 +91,7 @@ router.get("/", async (req, res) => {
         });
     }
 });
+
 
 // ==============================
 // Update Blog
