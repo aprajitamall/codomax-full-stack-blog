@@ -73,7 +73,64 @@ router.get("/", async (req, res) => {
     }
 });
 
+// ==============================
+// Update Blog
+// ==============================
 
+router.put("/:id", async (req, res) => {
+    try {
+        const {
+            title,
+            category,
+            content,
+            author
+        } = req.body;
+
+        // Validate fields
+        if (!title || !category || !content || !author) {
+            return res.status(400).json({
+                success: false,
+                message: "Title, category, content and author are required."
+            });
+        }
+
+        // Update blog in MongoDB
+        const updatedBlog = await Blog.findByIdAndUpdate(
+            req.params.id,
+            {
+                title,
+                category,
+                content,
+                author
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
+        if (!updatedBlog) {
+            return res.status(404).json({
+                success: false,
+                message: "Blog not found."
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Blog updated successfully.",
+            blog: updatedBlog
+        });
+
+    } catch (error) {
+        console.error("Update blog error:", error);
+
+        res.status(400).json({
+            success: false,
+            message: "Invalid blog ID."
+        });
+    }
+});
 // ==============================
 // Get Single Blog
 // ==============================
