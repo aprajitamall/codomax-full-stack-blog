@@ -106,3 +106,17 @@ blog-application/
 - Verified blogs persist after backend restart.
 - Verified MongoDB collections for users and blogs.
 - Completed Module 3 database integration.
+
+## Module 4 – CRUD Operations
+
+### Day 16 – Final CRUD Testing
+
+- Implemented Create, Read, Update and Delete operations for blogs.
+- Added MongoDB-based blog update functionality.
+- Added MongoDB-based blog deletion functionality.
+- Added blog search by title and content.
+- Added category-based blog filtering.
+- Tested combined search and category filtering.
+- Tested individual blog retrieval using MongoDB ObjectId.
+- Verified CRUD APIs with MongoDB persistence.
+- Completed Module 4 testing and documentation.
