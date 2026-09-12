@@ -25,12 +25,13 @@ router.post("/", authMiddleware, async (req, res) => {
             });
         }
 
-        // Create blog in MongoDB
+        // Create blog and attach logged-in user's ID
         const newBlog = await Blog.create({
             title,
             category,
             content,
-            author
+            author,
+            user: req.user.id
         });
 
         res.status(201).json({
@@ -48,9 +49,12 @@ router.post("/", authMiddleware, async (req, res) => {
         });
     }
 });
+
+
 // ==============================
 // Get All Blogs
 // Search & Category Filtering
+// Public Route
 // ==============================
 
 router.get("/", async (req, res) => {
@@ -62,8 +66,18 @@ router.get("/", async (req, res) => {
         // Search by title or content
         if (search) {
             filter.$or = [
-                { title: { $regex: search, $options: "i" } },
-                { content: { $regex: search, $options: "i" } }
+                {
+                    title: {
+                        $regex: search,
+                        $options: "i"
+                    }
+                },
+                {
+                    content: {
+                        $regex: search,
+                        $options: "i"
+                    }
+                }
             ];
         }
 
@@ -75,7 +89,8 @@ router.get("/", async (req, res) => {
             };
         }
 
-        const blogs = await Blog.find(filter).sort({ createdAt: -1 });
+        const blogs = await Blog.find(filter)
+            .sort({ createdAt: -1 });
 
         res.status(200).json({
             success: true,
@@ -95,11 +110,74 @@ router.get("/", async (req, res) => {
 
 
 // ==============================
+// Get Logged-in User's Blogs
+// Protected Route
+// ==============================
+
+router.get("/my", authMiddleware, async (req, res) => {
+    try {
+
+        const { search, category } = req.query;
+
+        // Only blogs created by logged-in user
+        let filter = {
+            user: req.user.id
+        };
+
+        // Search by title or content
+        if (search) {
+            filter.$or = [
+                {
+                    title: {
+                        $regex: search,
+                        $options: "i"
+                    }
+                },
+                {
+                    content: {
+                        $regex: search,
+                        $options: "i"
+                    }
+                }
+            ];
+        }
+
+        // Filter by category
+        if (category) {
+            filter.category = {
+                $regex: `^${category}$`,
+                $options: "i"
+            };
+        }
+
+        const blogs = await Blog.find(filter)
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({
+            success: true,
+            count: blogs.length,
+            blogs
+        });
+
+    } catch (error) {
+        console.error("Get my blogs error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Server error while fetching your blogs."
+        });
+    }
+});
+
+
+// ==============================
 // Update Blog
+// Only Blog Owner Can Update
 // ==============================
 
 router.put("/:id", authMiddleware, async (req, res) => {
     try {
+
         const {
             title,
             category,
@@ -115,9 +193,12 @@ router.put("/:id", authMiddleware, async (req, res) => {
             });
         }
 
-        // Update blog in MongoDB
-        const updatedBlog = await Blog.findByIdAndUpdate(
-            req.params.id,
+        // Update only if blog belongs to logged-in user
+        const updatedBlog = await Blog.findOneAndUpdate(
+            {
+                _id: req.params.id,
+                user: req.user.id
+            },
             {
                 title,
                 category,
@@ -133,7 +214,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
         if (!updatedBlog) {
             return res.status(404).json({
                 success: false,
-                message: "Blog not found."
+                message: "Blog not found or you are not the owner."
             });
         }
 
@@ -144,6 +225,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
         });
 
     } catch (error) {
+
         console.error("Update blog error:", error);
 
         res.status(400).json({
@@ -152,18 +234,26 @@ router.put("/:id", authMiddleware, async (req, res) => {
         });
     }
 });
+
+
 // ==============================
 // Delete Blog
+// Only Blog Owner Can Delete
 // ==============================
 
 router.delete("/:id", authMiddleware, async (req, res) => {
     try {
-        const deletedBlog = await Blog.findByIdAndDelete(req.params.id);
+
+        // Delete only if blog belongs to logged-in user
+        const deletedBlog = await Blog.findOneAndDelete({
+            _id: req.params.id,
+            user: req.user.id
+        });
 
         if (!deletedBlog) {
             return res.status(404).json({
                 success: false,
-                message: "Blog not found."
+                message: "Blog not found or you are not the owner."
             });
         }
 
@@ -174,6 +264,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
         });
 
     } catch (error) {
+
         console.error("Delete blog error:", error);
 
         res.status(400).json({
@@ -182,12 +273,16 @@ router.delete("/:id", authMiddleware, async (req, res) => {
         });
     }
 });
+
+
 // ==============================
 // Get Single Blog
+// Public Route
 // ==============================
 
 router.get("/:id", async (req, res) => {
     try {
+
         const blog = await Blog.findById(req.params.id);
 
         if (!blog) {
@@ -203,6 +298,7 @@ router.get("/:id", async (req, res) => {
         });
 
     } catch (error) {
+
         console.error("Get single blog error:", error);
 
         res.status(400).json({
@@ -214,3 +310,4 @@ router.get("/:id", async (req, res) => {
 
 
 module.exports = router;
+
