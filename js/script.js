@@ -21,63 +21,77 @@ document.addEventListener("DOMContentLoaded", function () {
     // Login Form
     // =========================
 
-    const loginForm = document.getElementById("loginForm");
+    
+const loginForm = document.getElementById("loginForm");
 
-    if (loginForm) {
+if (loginForm) {
 
-        loginForm.addEventListener("submit", async function (event) {
+    loginForm.addEventListener("submit", async function (event) {
 
-            event.preventDefault();
+        event.preventDefault();
 
-            const email =
-                document.getElementById("login-email").value.trim();
+        const email =
+            document.getElementById("login-email").value.trim();
 
-            const password =
-                document.getElementById("login-password").value;
+        const password =
+            document.getElementById("login-password").value;
 
-            if (email === "" || password === "") {
-                alert("Please fill in all fields.");
-                return;
-            }
+        if (email === "" || password === "") {
+            alert("Please fill in all fields.");
+            return;
+        }
 
-            try {
+        try {
 
-                const response = await fetch(
-                    "http://localhost:5000/api/auth/login",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            email: email,
-                            password: password
-                        })
-                    }
-                );
-
-                const data = await response.json();
-
-                if (data.success) {
-                    alert(data.message || "Login successful!");
-                } else {
-                    alert(data.message || "Login failed.");
+            const response = await fetch(
+                "http://localhost:5000/api/auth/login",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
                 }
+            );
 
-            } catch (error) {
+            const data = await response.json();
 
-                console.error("Login Error:", error);
+            if (data.success) {
 
-                alert(
-                    "Unable to connect to the server. Please make sure the backend is running."
+                // Store JWT token
+                localStorage.setItem("token", data.token);
+
+                // Store logged-in user
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(data.user)
                 );
+
+                alert(data.message || "Login successful!");
+
+                // Open dashboard
+                window.location.href = "dashboard.html";
+
+            } else {
+                alert(data.message || "Login failed.");
             }
 
-        });
-    }
+        } catch (error) {
+
+            console.error("Login Error:", error);
+
+            alert(
+                "Unable to connect to the server. Please make sure the backend is running."
+            );
+        }
+
+    });
+}
 
 
-    // =========================
     // Register Form
     // =========================
 
@@ -181,134 +195,143 @@ document.addEventListener("DOMContentLoaded", function () {
     // Create Blog Form
     // =========================
 
-    const createBlogForm =
-        document.getElementById("createBlogForm");
 
-    if (createBlogForm) {
+const createBlogForm =
+    document.getElementById("createBlogForm");
 
-        createBlogForm.addEventListener(
-            "submit",
-            async function (event) {
+if (createBlogForm) {
 
-                event.preventDefault();
+    createBlogForm.addEventListener(
+        "submit",
+        async function (event) {
 
-                const titleElement =
-                    document.getElementById("blog-title");
+            event.preventDefault();
 
-                const categoryElement =
-                    document.getElementById("blog-category");
+            const titleElement =
+                document.getElementById("blog-title");
 
-                const contentElement =
-                    document.getElementById("blog-content");
+            const categoryElement =
+                document.getElementById("blog-category");
 
-                if (
-                    !titleElement ||
-                    !categoryElement ||
-                    !contentElement
-                ) {
+            const contentElement =
+                document.getElementById("blog-content");
 
-                    alert("Blog form fields not found.");
-                    return;
-                }
+            if (
+                !titleElement ||
+                !categoryElement ||
+                !contentElement
+            ) {
+                alert("Blog form fields not found.");
+                return;
+            }
 
-                const title =
-                    titleElement.value.trim();
+            const title =
+                titleElement.value.trim();
 
-                const category =
-                    categoryElement.value.trim();
+            const category =
+                categoryElement.value.trim();
 
-                const content =
-                    contentElement.value.trim();
+            const content =
+                contentElement.value.trim();
 
-                if (
-                    title === "" ||
-                    category === "" ||
-                    content === ""
-                ) {
+            if (
+                title === "" ||
+                category === "" ||
+                content === ""
+            ) {
+                alert("Please complete all blog fields.");
+                return;
+            }
 
-                    alert("Please complete all blog fields.");
-                    return;
-                }
+            // Get JWT token
+            const token = localStorage.getItem("token");
 
-                try {
+            if (!token) {
+                alert("Please login first.");
+                window.location.href = "login.html";
+                return;
+            }
 
-                    const response = await fetch(
-                        "http://localhost:5000/api/blogs",
-                        {
-                            method: "POST",
+            try {
 
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
+                const response = await fetch(
+                    "http://localhost:5000/api/blogs",
+                    {
+                        method: "POST",
 
-                            body: JSON.stringify({
-                                title: title,
-                                category: category,
-                                content: content,
-                                author: "Aprajita Mall"
-                            })
-                        }
-                    );
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
 
-                    const data =
-                        await response.json();
-
-                    console.log(
-                        "Create Blog Response:",
-                        data
-                    );
-
-                    if (response.ok && data.success) {
-
-                        alert(
-                            data.message ||
-                            "Blog published successfully!"
-                        );
-
-                        createBlogForm.reset();
-
-                        if (previewTitle) {
-                            previewTitle.textContent =
-                                "Your Blog Title";
-                        }
-
-                        if (previewCategory) {
-                            previewCategory.textContent =
-                                "Category";
-                        }
-
-                        if (previewContent) {
-                            previewContent.textContent =
-                                "Your blog content will appear here...";
-                        }
-
-                        if (characterCount) {
-                            characterCount.textContent = "0";
-                        }
-
-                    } else {
-
-                        alert(
-                            data.message ||
-                            "Unable to publish blog."
-                        );
+                        body: JSON.stringify({
+                            title: title,
+                            category: category,
+                            content: content,
+                            author: "Aprajita Mall"
+                        })
                     }
+                );
 
-                } catch (error) {
+                const data =
+                    await response.json();
 
-                    console.error(
-                        "Create Blog Error:",
-                        error
-                    );
+                console.log(
+                    "Create Blog Response:",
+                    data
+                );
+
+                if (response.ok && data.success) {
 
                     alert(
-                        "Unable to connect to the server. Please make sure the backend is running."
+                        data.message ||
+                        "Blog published successfully!"
+                    );
+
+                    createBlogForm.reset();
+
+                    if (previewTitle) {
+                        previewTitle.textContent =
+                            "Your Blog Title";
+                    }
+
+                    if (previewCategory) {
+                        previewCategory.textContent =
+                            "Category";
+                    }
+
+                    if (previewContent) {
+                        previewContent.textContent =
+                            "Your blog content will appear here...";
+                    }
+
+                    if (characterCount) {
+                        characterCount.textContent = "0";
+                    }
+
+                } else {
+
+                    alert(
+                        data.message ||
+                        "Unable to publish blog."
                     );
                 }
 
+            } catch (error) {
+
+                console.error(
+                    "Create Blog Error:",
+                    error
+                );
+
+                alert(
+                    "Unable to connect to the server. Please make sure the backend is running."
+                );
             }
-        );
-    }
+
+        }
+    );
+}
 
 
     // =========================
