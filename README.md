@@ -120,3 +120,44 @@ blog-application/
 - Tested individual blog retrieval using MongoDB ObjectId.
 - Verified CRUD APIs with MongoDB persistence.
 - Completed Module 4 testing and documentation.
+## Module 5 – Authentication & Dashboard
+
+### Day 17 – JWT Authentication
+
+- Implemented JWT-based user authentication.
+- Added JWT secret configuration using environment variables.
+- Updated login API to generate and return JWT tokens.
+- Stored authenticated user information securely in the frontend.
+- Tested successful user login and token generation.
+
+### Day 18 – Protected Routes
+
+- Created JWT authentication middleware.
+- Protected blog creation, update and delete routes.
+- Added Bearer token authentication for private API requests.
+- Prevented unauthenticated users from creating or modifying blogs.
+- Added frontend authentication handling for protected actions.
+- Tested protected routes with and without valid authentication tokens.
+
+### Day 19 – User Dashboard & Blog Ownership
+
+- Added user-specific blog ownership using MongoDB user references.
+- Updated the Blog model to store the authenticated user's ID.
+- Added protected `/api/blogs/my` route to retrieve the logged-in user's blogs.
+- Updated the dashboard to display the logged-in user's name and email.
+- Added total blogs, published blogs and draft statistics.
+- Added delete functionality for the user's own blogs.
+- Prevented users from updating or deleting blogs they do not own.
+- Added logout functionality using localStorage session cleanup.
+
+### Day 20 – Final Testing & Documentation
+
+- Tested JWT login and authentication.
+- Tested dashboard access protection.
+- Tested user-specific blog retrieval.
+- Tested blog creation with authenticated users.
+- Tested blog deletion and ownership protection.
+- Tested logout and session cleanup.
+- Verified frontend and backend integration.
+- Updated project documentation.
+- Completed Module 5 Authentication & Dashboard.
