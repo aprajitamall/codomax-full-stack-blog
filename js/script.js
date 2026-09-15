@@ -1,5 +1,67 @@
 
 document.addEventListener("DOMContentLoaded", function () {
+        // =========================
+    // Dark Mode
+    // =========================
+
+    const themeToggle =
+        document.getElementById("themeToggle");
+
+    const savedTheme =
+        localStorage.getItem("theme");
+
+
+    // Apply saved theme
+    if (savedTheme === "dark") {
+
+        document.body.classList.add(
+            "dark-mode"
+        );
+    }
+
+
+    // Update button icon
+    if (themeToggle) {
+
+        themeToggle.textContent =
+            document.body.classList.contains("dark-mode")
+                ? "☀️"
+                : "🌙";
+
+
+        themeToggle.addEventListener(
+            "click",
+            function () {
+
+                document.body.classList.toggle(
+                    "dark-mode"
+                );
+
+
+                const isDark =
+                    document.body.classList.contains(
+                        "dark-mode"
+                    );
+
+
+                // Save theme preference
+                localStorage.setItem(
+                    "theme",
+                    isDark
+                        ? "dark"
+                        : "light"
+                );
+
+
+                // Change icon
+                themeToggle.textContent =
+                    isDark
+                        ? "☀️"
+                        : "🌙";
+
+            }
+        );
+    }
 
     console.log("BlogSphere application loaded successfully.");
 

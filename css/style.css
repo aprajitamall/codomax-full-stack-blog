@@ -1,4 +1,6 @@
-
+/* =========================
+   Global
+========================= */
 
 * {
     margin: 0;
@@ -11,6 +13,7 @@ body {
     background-color: #f5f7fb;
     color: #1f2937;
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -18,9 +21,14 @@ a {
 }
 
 
+/* =========================
+   Header & Navigation
+========================= */
+
 header {
     background-color: #ffffff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.3s ease;
 }
 
 .navbar {
@@ -59,6 +67,36 @@ header {
 }
 
 
+/* =========================
+   Dark Mode Button
+========================= */
+
+.theme-toggle {
+    border: none;
+    background-color: #f3f4f6;
+    color: #374151;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.08);
+}
+
+
+/* =========================
+   Hero
+========================= */
+
 .hero {
     min-height: 480px;
 
@@ -75,6 +113,8 @@ header {
         #dbeafe,
         #eff6ff
     );
+
+    transition: background 0.3s ease;
 }
 
 .hero-content {
@@ -94,6 +134,10 @@ header {
     margin-bottom: 30px;
 }
 
+
+/* =========================
+   Buttons
+========================= */
 
 .btn {
     display: inline-block;
@@ -115,6 +159,10 @@ header {
     transform: translateY(-2px);
 }
 
+
+/* =========================
+   Blogs
+========================= */
 
 .blogs-section {
     max-width: 1200px;
@@ -141,7 +189,6 @@ header {
     gap: 25px;
 }
 
-
 .blog-card {
     background-color: #ffffff;
 
@@ -151,7 +198,7 @@ header {
 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 
-    transition: 0.3s;
+    transition: 0.3s, background-color 0.3s ease;
 }
 
 .blog-card:hover {
@@ -202,6 +249,11 @@ header {
     text-decoration: underline;
 }
 
+
+/* =========================
+   Footer
+========================= */
+
 footer {
     text-align: center;
 
@@ -215,34 +267,9 @@ footer {
 }
 
 
-@media (max-width: 768px) {
-
-    .navbar {
-        flex-direction: column;
-
-        gap: 15px;
-    }
-
-    .nav-links {
-        gap: 15px;
-
-        flex-wrap: wrap;
-
-        justify-content: center;
-    }
-
-    .hero h1 {
-        font-size: 38px;
-    }
-
-    .hero p {
-        font-size: 16px;
-    }
-
-    .blog-container {
-        grid-template-columns: 1fr;
-    }
-}
+/* =========================
+   Authentication
+========================= */
 
 .auth-section {
     min-height: 650px;
@@ -267,6 +294,8 @@ footer {
     border-radius: 12px;
 
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+    transition: background-color 0.3s ease;
 }
 
 .auth-container h1 {
@@ -366,6 +395,8 @@ footer {
 .auth-footer a:hover {
     text-decoration: underline;
 }
+
+
 /* =========================
    Dashboard
 ========================= */
@@ -427,6 +458,8 @@ footer {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 
     text-align: center;
+
+    transition: background-color 0.3s ease;
 }
 
 .stat-card h3 {
@@ -444,7 +477,6 @@ footer {
 
     color: #2563eb;
 }
-
 
 .my-blogs h2 {
     font-size: 28px;
@@ -466,6 +498,12 @@ footer {
     color: #dc2626;
 
     font-weight: bold;
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: inherit;
+    padding: 0;
 }
 
 .delete-link:hover {
@@ -473,18 +511,6 @@ footer {
 }
 
 
-@media (max-width: 768px) {
-
-    .dashboard-header {
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-    .stats-container {
-        grid-template-columns: 1fr;
-    }
-}
 /* =========================
    Create Blog
 ========================= */
@@ -509,6 +535,8 @@ footer {
     border-radius: 12px;
 
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+    transition: background-color 0.3s ease;
 }
 
 .create-blog-header {
@@ -546,6 +574,9 @@ footer {
     outline: none;
 
     transition: 0.3s;
+
+    background-color: #ffffff;
+    color: #1f2937;
 }
 
 .form-group select:focus,
@@ -598,27 +629,6 @@ footer {
 }
 
 
-/* Create Blog Responsive Design */
-
-@media (max-width: 600px) {
-
-    .create-blog-container {
-        padding: 25px;
-    }
-
-    .create-blog-header h1 {
-        font-size: 28px;
-    }
-
-    .blog-form-actions {
-        flex-direction: column;
-    }
-
-    .blog-form-actions .auth-btn,
-    .cancel-btn {
-        width: 100%;
-    }
-}
 /* =========================
    Blogs Page
 ========================= */
@@ -644,6 +654,8 @@ footer {
 
     font-size: 17px;
 }
+
+
 /* =========================
    Blog Search & Filter
 ========================= */
@@ -673,6 +685,8 @@ footer {
     outline: none;
 
     background-color: #ffffff;
+
+    color: #1f2937;
 }
 
 .blog-controls input:focus,
@@ -683,15 +697,6 @@ footer {
 }
 
 
-/* Responsive Search */
-
-@media (max-width: 600px) {
-
-    .blog-controls {
-        flex-direction: column;
-    }
-
-}
 /* =========================
    Blog Details
 ========================= */
@@ -708,6 +713,8 @@ footer {
     border-radius: 12px;
 
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+    transition: background-color 0.3s ease;
 }
 
 .blog-details > .category {
@@ -769,87 +776,6 @@ footer {
 }
 
 
-/* Blog Details Responsive */
-
-@media (max-width: 600px) {
-
-    .blog-details {
-        margin: 30px 20px;
-
-        padding: 25px;
-    }
-
-    .blog-details h1 {
-        font-size: 32px;
-    }
-
-    .blog-content p {
-        font-size: 16px;
-    }
-
-}
-/* =========================
-   Mobile Navigation
-========================= */
-
-.menu-toggle {
-    display: none;
-
-    background: none;
-
-    border: none;
-
-    font-size: 28px;
-
-    cursor: pointer;
-
-    color: #111827;
-}
-
-
-/* Mobile Navigation */
-
-@media (max-width: 768px) {
-
-    .menu-toggle {
-        display: block;
-    }
-
-    .navbar {
-        position: relative;
-    }
-
-    .nav-links {
-        display: none;
-
-        position: absolute;
-
-        top: 65px;
-
-        left: 0;
-
-        width: 100%;
-
-        background-color: #ffffff;
-
-        flex-direction: column;
-
-        padding: 20px;
-
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-
-        z-index: 1000;
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .nav-links li {
-        margin: 10px 0;
-    }
-
-}
 /* =========================
    Blog Preview
 ========================= */
@@ -882,6 +808,8 @@ footer {
     border-radius: 10px;
 
     background-color: #f9fafb;
+
+    transition: background-color 0.3s ease;
 }
 
 .preview-card h2 {
@@ -897,6 +825,8 @@ footer {
 
     white-space: pre-wrap;
 }
+
+
 /* =========================
    Password Toggle
 ========================= */
@@ -933,4 +863,315 @@ footer {
 
 .toggle-password:hover {
     text-decoration: underline;
+}
+
+
+/* =========================
+   Dark Mode
+========================= */
+
+body.dark-mode {
+    background-color: #111827;
+    color: #e5e7eb;
+}
+
+
+/* Header */
+
+body.dark-mode header {
+    background-color: #1f2937;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .nav-links a {
+    color: #d1d5db;
+}
+
+body.dark-mode .nav-links a:hover {
+    color: #60a5fa;
+}
+
+body.dark-mode .theme-toggle {
+    background-color: #374151;
+    color: #f9fafb;
+}
+
+
+/* Hero */
+
+body.dark-mode .hero {
+    background: linear-gradient(
+        135deg,
+        #172554,
+        #1e3a8a
+    );
+}
+
+body.dark-mode .hero h1 {
+    color: #f9fafb;
+}
+
+body.dark-mode .hero p {
+    color: #d1d5db;
+}
+
+
+/* Sections */
+
+body.dark-mode .blogs-section,
+body.dark-mode .dashboard-section {
+    background-color: #111827;
+}
+
+body.dark-mode .blogs-section h2,
+body.dark-mode .page-title,
+body.dark-mode .dashboard-header h1,
+body.dark-mode .my-blogs h2 {
+    color: #f9fafb;
+}
+
+body.dark-mode .page-description,
+body.dark-mode .dashboard-header p {
+    color: #9ca3af;
+}
+
+
+/* Blog Cards */
+
+body.dark-mode .blog-card,
+body.dark-mode .stat-card,
+body.dark-mode .auth-container,
+body.dark-mode .create-blog-container,
+body.dark-mode .blog-details {
+    background-color: #1f2937;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-mode .blog-card h3,
+body.dark-mode .blog-details h1,
+body.dark-mode .blog-content h2,
+body.dark-mode .preview-card h2,
+body.dark-mode .blog-preview h3,
+body.dark-mode .auth-container h1,
+body.dark-mode .create-blog-header h1 {
+    color: #f9fafb;
+}
+
+body.dark-mode .blog-card p,
+body.dark-mode .blog-content p,
+body.dark-mode .blog-meta,
+body.dark-mode .auth-subtitle,
+body.dark-mode .auth-footer,
+body.dark-mode .create-blog-header p,
+body.dark-mode .stat-card h3,
+body.dark-mode .character-counter {
+    color: #9ca3af;
+}
+
+
+/* Category */
+
+body.dark-mode .category {
+    background-color: #1e3a8a;
+    color: #bfdbfe;
+}
+
+
+/* Authentication */
+
+body.dark-mode .auth-section,
+body.dark-mode .create-blog-section {
+    background-color: #111827;
+}
+
+body.dark-mode .form-group label {
+    color: #d1d5db;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea,
+body.dark-mode .blog-controls input,
+body.dark-mode .blog-controls select {
+    background-color: #374151;
+    color: #f9fafb;
+    border-color: #4b5563;
+}
+
+body.dark-mode .form-group input::placeholder,
+body.dark-mode .form-group textarea::placeholder,
+body.dark-mode .blog-controls input::placeholder {
+    color: #9ca3af;
+}
+
+body.dark-mode .cancel-btn {
+    color: #d1d5db;
+    border-color: #4b5563;
+}
+
+body.dark-mode .cancel-btn:hover {
+    background-color: #374151;
+}
+
+
+/* Blog Preview */
+
+body.dark-mode .preview-card {
+    background-color: #374151;
+    border-color: #4b5563;
+}
+
+body.dark-mode .preview-card p {
+    color: #d1d5db;
+}
+
+
+/* Mobile Navigation */
+
+body.dark-mode .nav-links {
+    background-color: #1f2937;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .menu-toggle {
+    color: #f9fafb;
+}
+
+
+/* Footer */
+
+body.dark-mode footer {
+    background-color: #030712;
+}
+
+
+/* =========================
+   Responsive Design
+========================= */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .nav-links {
+        gap: 15px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .blog-container {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-toggle {
+        display: block;
+
+        background: none;
+
+        border: none;
+
+        font-size: 28px;
+
+        cursor: pointer;
+
+        color: #111827;
+    }
+
+    .navbar {
+        position: relative;
+    }
+
+    .nav-links {
+        display: none;
+
+        position: absolute;
+
+        top: 65px;
+
+        left: 0;
+
+        width: 100%;
+
+        background-color: #ffffff;
+
+        flex-direction: column;
+
+        padding: 20px;
+
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+        z-index: 1000;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .create-blog-container {
+        padding: 25px;
+    }
+
+    .create-blog-header h1 {
+        font-size: 28px;
+    }
+
+    .blog-form-actions {
+        flex-direction: column;
+    }
+
+    .blog-form-actions .auth-btn,
+    .cancel-btn {
+        width: 100%;
+    }
+
+    .blog-controls {
+        flex-direction: column;
+    }
+
+    .blog-details {
+        margin: 30px 20px;
+
+        padding: 25px;
+    }
+
+    .blog-details h1 {
+        font-size: 32px;
+    }
+
+    .blog-content p {
+        font-size: 16px;
+    }
 }

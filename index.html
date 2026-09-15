@@ -12,7 +12,7 @@
 
 <body>
 
- 
+  <!-- Header -->
   <header>
 
     <nav class="navbar">
@@ -24,6 +24,7 @@
       <button
         class="menu-toggle"
         id="menuToggle"
+        type="button"
       >
         ☰
       </button>
@@ -57,6 +58,17 @@
           </a>
         </li>
 
+        <!-- Dark Mode Toggle -->
+        <li>
+          <button
+            id="themeToggle"
+            class="theme-toggle"
+            type="button"
+          >
+            🌙
+          </button>
+        </li>
+
       </ul>
 
     </nav>
@@ -64,12 +76,10 @@
   </header>
 
 
-  
-
+  <!-- Main Content -->
   <main>
 
     <!-- Hero Section -->
-
     <section class="hero">
 
       <div class="hero-content">
@@ -83,30 +93,31 @@
           with our growing community of bloggers.
         </p>
 
-
         <!-- Hero Buttons -->
+        <div class="hero-buttons">
 
-       
+          <a
+            href="blogs.html"
+            class="btn"
+          >
+            Explore Blogs
+          </a>
 
-          <div class="hero-buttons">
+          <a
+            href="create-blog.html"
+            class="btn"
+          >
+            Create Blog
+          </a>
 
-    <a href="blogs.html" class="btn">
-        Explore Blogs
-    </a>
-
-    <a href="create-blog.html" class="btn">
-        Create Blog
-    </a>
-
-</div>
-       
+        </div>
 
       </div>
 
     </section>
 
 
-
+    <!-- Featured Blogs Section -->
     <section class="blogs-section">
 
       <h2>
@@ -118,7 +129,6 @@
 
 
         <!-- Blog 1 -->
-
         <article class="blog-card">
 
           <div class="blog-content">
@@ -149,7 +159,6 @@
 
 
         <!-- Blog 2 -->
-
         <article class="blog-card">
 
           <div class="blog-content">
@@ -180,7 +189,6 @@
 
 
         <!-- Blog 3 -->
-
         <article class="blog-card">
 
           <div class="blog-content">
@@ -217,6 +225,7 @@
   </main>
 
 
+  <!-- Footer -->
   <footer>
 
     <p>
@@ -227,7 +236,6 @@
 
 
   <!-- JavaScript -->
-
   <script src="js/script.js"></script>
 
 </body>
