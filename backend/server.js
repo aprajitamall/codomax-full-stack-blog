@@ -10,8 +10,7 @@ const cors = require("cors");
 const app = express();
 connectDB();
 
-const PORT = 5000;
-
+const PORT = process.env.PORT || 5000;
 // Middleware
 
 
@@ -48,7 +47,7 @@ app.get("/api/health", (req, res) => {
 // Start Server
 
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
 
     console.log(
         `BlogSphere server running at http://localhost:${PORT}`
