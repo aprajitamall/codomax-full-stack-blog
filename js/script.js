@@ -1,6 +1,6 @@
-
 document.addEventListener("DOMContentLoaded", function () {
-        // =========================
+
+    // =========================
     // Dark Mode
     // =========================
 
@@ -10,15 +10,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const savedTheme =
         localStorage.getItem("theme");
 
-
     // Apply saved theme
     if (savedTheme === "dark") {
-
-        document.body.classList.add(
-            "dark-mode"
-        );
+        document.body.classList.add("dark-mode");
     }
-
 
     // Update button icon
     if (themeToggle) {
@@ -28,37 +23,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 ? "☀️"
                 : "🌙";
 
-
         themeToggle.addEventListener(
             "click",
             function () {
 
-                document.body.classList.toggle(
-                    "dark-mode"
-                );
-
+                document.body.classList.toggle("dark-mode");
 
                 const isDark =
-                    document.body.classList.contains(
-                        "dark-mode"
-                    );
-
+                    document.body.classList.contains("dark-mode");
 
                 // Save theme preference
                 localStorage.setItem(
                     "theme",
-                    isDark
-                        ? "dark"
-                        : "light"
+                    isDark ? "dark" : "light"
                 );
-
 
                 // Change icon
                 themeToggle.textContent =
-                    isDark
-                        ? "☀️"
-                        : "🌙";
-
+                    isDark ? "☀️" : "🌙";
             }
         );
     }
@@ -115,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         .getElementById("login-password")
                         .value;
 
-
                 if (email === "" || password === "") {
 
                     alert("Please fill in all fields.");
@@ -123,12 +104,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 try {
 
                     const response =
                         await fetch(
-                            "http://localhost:5000/api/auth/login",
+                            "https://blogsphere-backend-spor.onrender.com/api/auth/login",
                             {
                                 method: "POST",
 
@@ -144,10 +124,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             }
                         );
 
-
                     const data =
                         await response.json();
-
 
                     if (data.success) {
 
@@ -157,19 +135,16 @@ document.addEventListener("DOMContentLoaded", function () {
                             data.token
                         );
 
-
                         // Store logged-in user
                         localStorage.setItem(
                             "user",
                             JSON.stringify(data.user)
                         );
 
-
                         alert(
                             data.message ||
                             "Login successful!"
                         );
-
 
                         // Open dashboard
                         window.location.href =
@@ -207,7 +182,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const registerForm =
         document.getElementById("registerForm");
 
-
     if (registerForm) {
 
         registerForm.addEventListener(
@@ -216,13 +190,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 event.preventDefault();
 
-
                 const name =
                     document
                         .getElementById("name")
                         .value
                         .trim();
-
 
                 const email =
                     document
@@ -230,18 +202,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         .value
                         .trim();
 
-
                 const password =
                     document
                         .getElementById("register-password")
                         .value;
 
-
                 const confirmPassword =
                     document
                         .getElementById("confirm-password")
                         .value;
-
 
                 if (
                     name === "" ||
@@ -257,7 +226,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 if (password.length < 6) {
 
                     alert(
@@ -266,7 +234,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     return;
                 }
-
 
                 if (password !== confirmPassword) {
 
@@ -277,12 +244,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 try {
 
                     const response =
                         await fetch(
-                            "http://localhost:5000/api/auth/register",
+                            "https://blogsphere-backend-spor.onrender.com/api/auth/register",
                             {
                                 method: "POST",
 
@@ -299,10 +265,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             }
                         );
 
-
                     const data =
                         await response.json();
-
 
                     if (data.success) {
 
@@ -310,7 +274,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             data.message ||
                             "Registration successful!"
                         );
-
 
                         registerForm.reset();
 
@@ -346,7 +309,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const createBlogForm =
         document.getElementById("createBlogForm");
 
-
     if (createBlogForm) {
 
         createBlogForm.addEventListener(
@@ -354,7 +316,6 @@ document.addEventListener("DOMContentLoaded", function () {
             async function (event) {
 
                 event.preventDefault();
-
 
                 const titleElement =
                     document.getElementById("blog-title");
@@ -364,7 +325,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const contentElement =
                     document.getElementById("blog-content");
-
 
                 if (
                     !titleElement ||
@@ -379,7 +339,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 const title =
                     titleElement.value.trim();
 
@@ -388,7 +347,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const content =
                     contentElement.value.trim();
-
 
                 if (
                     title === "" ||
@@ -403,11 +361,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 // Get JWT token
                 const token =
                     localStorage.getItem("token");
-
 
                 if (!token) {
 
@@ -421,7 +377,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 // Get logged-in user
                 const userData =
                     localStorage.getItem("user");
@@ -432,12 +387,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     user = JSON.parse(userData);
                 }
 
-
                 try {
 
                     const response =
                         await fetch(
-                            "http://localhost:5000/api/blogs",
+                            "https://blogsphere-backend-spor.onrender.com/api/blogs",
                             {
                                 method: "POST",
 
@@ -465,16 +419,13 @@ document.addEventListener("DOMContentLoaded", function () {
                             }
                         );
 
-
                     const data =
                         await response.json();
-
 
                     console.log(
                         "Create Blog Response:",
                         data
                     );
-
 
                     if (
                         response.ok &&
@@ -486,9 +437,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             "Blog published successfully!"
                         );
 
-
                         createBlogForm.reset();
-
 
                         if (previewTitle) {
 
@@ -496,20 +445,17 @@ document.addEventListener("DOMContentLoaded", function () {
                                 "Your Blog Title";
                         }
 
-
                         if (previewCategory) {
 
                             previewCategory.textContent =
                                 "Category";
                         }
 
-
                         if (previewContent) {
 
                             previewContent.textContent =
                                 "Your blog content will appear here...";
                         }
-
 
                         if (characterCount) {
 
@@ -567,7 +513,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const characterCount =
         document.getElementById("characterCount");
 
-
     if (blogTitle && previewTitle) {
 
         blogTitle.addEventListener(
@@ -581,7 +526,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
     }
-
 
     if (blogCategory && previewCategory) {
 
@@ -606,7 +550,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
-
     if (blogContent && previewContent) {
 
         blogContent.addEventListener(
@@ -616,7 +559,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 previewContent.textContent =
                     blogContent.value.trim() ||
                     "Your blog content will appear here...";
-
 
                 if (characterCount) {
 
@@ -640,7 +582,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById(
             "toggleLoginPassword"
         );
-
 
     if (
         loginPassword &&
@@ -690,7 +631,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "toggleRegisterPassword"
         );
 
-
     if (
         registerPassword &&
         toggleRegisterPassword
@@ -738,7 +678,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById(
             "toggleConfirmPassword"
         );
-
 
     if (
         confirmPassword &&
@@ -795,26 +734,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let allBlogs = [];
 
-
     async function loadBlogs() {
 
         if (!blogContainer) {
             return;
         }
 
-
         try {
 
             // Public API
             const response =
                 await fetch(
-                    "http://localhost:5000/api/blogs"
+                    "https://blogsphere-backend-spor.onrender.com/api/blogs"
                 );
-
 
             const data =
                 await response.json();
-
 
             if (!data.success) {
 
@@ -824,15 +759,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
             }
 
-
             allBlogs =
                 data.blogs;
-
 
             displayBlogs(
                 allBlogs
             );
-
 
         } catch (error) {
 
@@ -840,7 +772,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Load Blogs Error:",
                 error
             );
-
 
             blogContainer.innerHTML = `
                 <p>
@@ -862,9 +793,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         blogContainer.innerHTML = "";
-
 
         if (blogs.length === 0) {
 
@@ -875,7 +804,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         blogs.forEach(
             function (blog) {
 
@@ -884,10 +812,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         "article"
                     );
 
-
                 article.className =
                     "blog-card searchable-blog";
-
 
                 const shortContent =
                     blog.content.length > 120
@@ -896,7 +822,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             120
                         ) + "..."
                         : blog.content;
-
 
                 article.innerHTML = `
 
@@ -930,7 +855,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 `;
 
-
                 blogContainer.appendChild(
                     article
                 );
@@ -954,18 +878,15 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         const searchText =
             searchInput.value
                 .trim()
                 .toLowerCase();
 
-
         const selectedCategory =
             categoryFilter.value
                 .trim()
                 .toLowerCase();
-
 
         const filteredBlogs =
             allBlogs.filter(
@@ -982,12 +903,10 @@ document.addEventListener("DOMContentLoaded", function () {
                             blog.category
                         ).toLowerCase();
 
-
                     const matchesSearch =
                         blogText.includes(
                             searchText
                         );
-
 
                     const matchesCategory =
                         selectedCategory ===
@@ -998,7 +917,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                 selectedCategory
                             );
 
-
                     return (
                         matchesSearch &&
                         matchesCategory
@@ -1006,12 +924,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             );
 
-
         displayBlogs(
             filteredBlogs
         );
     }
-
 
     if (
         searchInput &&
@@ -1023,13 +939,11 @@ document.addEventListener("DOMContentLoaded", function () {
             filterBlogs
         );
 
-
         categoryFilter.addEventListener(
             "change",
             filterBlogs
         );
     }
-
 
     if (blogContainer) {
 
@@ -1046,7 +960,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "dashboardBlogContainer"
         );
 
-
     if (dashboardBlogContainer) {
 
         const token =
@@ -1054,12 +967,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 "token"
             );
 
-
         const userData =
             localStorage.getItem(
                 "user"
             );
-
 
         // Protect dashboard
         if (
@@ -1077,7 +988,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         // ===============================
         // Display User Profile
         // ===============================
@@ -1085,25 +995,21 @@ document.addEventListener("DOMContentLoaded", function () {
         const user =
             JSON.parse(userData);
 
-
         const userName =
             document.getElementById(
                 "userName"
             );
-
 
         const userEmail =
             document.getElementById(
                 "userEmail"
             );
 
-
         if (userName) {
 
             userName.textContent =
                 user.name;
         }
-
 
         if (userEmail) {
 
@@ -1122,7 +1028,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const response =
                     await fetch(
-                        "http://localhost:5000/api/blogs/my",
+                        "https://blogsphere-backend-spor.onrender.com/api/blogs/my",
                         {
                             method: "GET",
 
@@ -1133,10 +1039,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                     );
 
-
                 const data =
                     await response.json();
-
 
                 // Token expired
                 if (
@@ -1152,19 +1056,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         "user"
                     );
 
-
                     alert(
                         "Session expired. Please login again."
                     );
 
-
                     window.location.href =
                         "login.html";
 
-
                     return;
                 }
-
 
                 if (!data.success) {
 
@@ -1174,10 +1074,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
                 }
 
-
                 const blogs =
                     data.blogs;
-
 
                 // ===============================
                 // Dashboard Statistics
@@ -1188,25 +1086,21 @@ document.addEventListener("DOMContentLoaded", function () {
                         "totalBlogs"
                     );
 
-
                 const publishedBlogs =
                     document.getElementById(
                         "publishedBlogs"
                     );
-
 
                 const draftBlogs =
                     document.getElementById(
                         "draftBlogs"
                     );
 
-
                 if (totalBlogs) {
 
                     totalBlogs.textContent =
                         blogs.length;
                 }
-
 
                 // All blogs are currently treated
                 // as published
@@ -1216,14 +1110,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         blogs.length;
                 }
 
-
                 // Draft functionality not implemented
                 if (draftBlogs) {
 
                     draftBlogs.textContent =
                         0;
                 }
-
 
                 // ===============================
                 // No Blogs
@@ -1249,7 +1141,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-
                 // ===============================
                 // Display User Blogs
                 // ===============================
@@ -1268,16 +1159,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                         ${blog.category}
                                     </span>
 
-
                                     <h3>
                                         ${blog.title}
                                     </h3>
 
-
                                     <p>
                                         ${blog.content}
                                     </p>
-
 
                                     <div
                                         class="blog-actions"
@@ -1289,7 +1177,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                         >
                                             View
                                         </a>
-
 
                                         <button
                                             type="button"
@@ -1307,7 +1194,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                     ).join("");
 
-
                 // ===============================
                 // Delete Buttons
                 // ===============================
@@ -1317,7 +1203,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         .querySelectorAll(
                             ".delete-link"
                         );
-
 
                 deleteButtons.forEach(
                     function (button) {
@@ -1331,12 +1216,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                         "data-blog-id"
                                     );
 
-
                                 const confirmDelete =
                                     confirm(
                                         "Are you sure you want to delete this blog?"
                                     );
-
 
                                 if (
                                     !confirmDelete
@@ -1345,12 +1228,11 @@ document.addEventListener("DOMContentLoaded", function () {
                                     return;
                                 }
 
-
                                 try {
 
                                     const deleteResponse =
                                         await fetch(
-                                            `http://localhost:5000/api/blogs/${blogId}`,
+                                            `https://blogsphere-backend-spor.onrender.com/api/blogs/${blogId}`,
                                             {
                                                 method:
                                                     "DELETE",
@@ -1362,10 +1244,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                             }
                                         );
 
-
                                     const deleteData =
                                         await deleteResponse.json();
-
 
                                     // Token expired
                                     if (
@@ -1381,19 +1261,15 @@ document.addEventListener("DOMContentLoaded", function () {
                                             "user"
                                         );
 
-
                                         alert(
                                             "Session expired. Please login again."
                                         );
 
-
                                         window.location.href =
                                             "login.html";
 
-
                                         return;
                                     }
-
 
                                     if (
                                         !deleteData.success
@@ -1407,11 +1283,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                         return;
                                     }
 
-
                                     alert(
                                         "Blog deleted successfully."
                                     );
-
 
                                     // Reload dashboard data
                                     loadDashboardBlogs();
@@ -1423,7 +1297,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                         error
                                     );
 
-
                                     alert(
                                         "Unable to connect to the server."
                                     );
@@ -1433,14 +1306,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         );
                 });
 
-
             } catch (error) {
 
                 console.error(
                     "Dashboard Error:",
                     error
                 );
-
 
                 dashboardBlogContainer.innerHTML = `
                     <p>
@@ -1450,7 +1321,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
             }
         }
-
 
         // Load dashboard blogs
         loadDashboardBlogs();
@@ -1466,7 +1336,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "logoutLink"
         );
 
-
     if (logoutLink) {
 
         logoutLink.addEventListener(
@@ -1475,21 +1344,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 event.preventDefault();
 
-
                 localStorage.removeItem(
                     "token"
                 );
-
 
                 localStorage.removeItem(
                     "user"
                 );
 
-
                 alert(
                     "Logged out successfully."
                 );
-
 
                 window.location.href =
                     "login.html";
@@ -1499,4 +1364,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
-

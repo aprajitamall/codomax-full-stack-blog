@@ -392,7 +392,7 @@ npm run dev
 The backend runs on:
 
 ```text
-http://localhost:5000
+https://blogsphere-backend-spor.onrender.com
 ```
 
 ---
